@@ -17,4 +17,8 @@ class Produto extends Model
         'estoque',
         'ativo',
     ];
+
+    public function categoria() {
+        return $this->belongsTo(Categoria::class);
+    }
 }
