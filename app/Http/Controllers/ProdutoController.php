@@ -8,9 +8,19 @@ use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $produtos = Produto::paginate(10);
+        $query = Produto::query();
+
+        if ($request->has('ativo')){
+            $dados = $request->validate([
+                'ativo' => 'required|boolean',
+            ]);
+
+
+            $query->where('ativo', $dados['ativo']);
+        }
+        $produtos = $query->paginate(10);
         return response()->json($produtos);
     }
 
@@ -66,7 +76,7 @@ class ProdutoController extends Controller
         $dados = $request->validate([
             'ativo' => 'required|boolean',
         ]);
-        
+
         $produto->update($dados);
         return response()->json($produto);
     }
