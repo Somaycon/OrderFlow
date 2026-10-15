@@ -59,4 +59,15 @@ class ProdutoController extends Controller
         $produto->update($dados);
         return response()->json($produto);
     }
+
+    public function updateStatus(Request $request, int $id): JsonResponse
+    {
+        $produto = Produto::findOrFail($id);
+        $dados = $request->validate([
+            'ativo' => 'required|boolean',
+        ]);
+        
+        $produto->update($dados);
+        return response()->json($produto);
+    }
 }

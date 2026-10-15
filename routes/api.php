@@ -9,4 +9,5 @@ Route::group(["prefix"=> "/produtos"], function () {
     Route::post("/", [ProdutoController::class, 'store']);
     Route::put("/{id}", [ProdutoController::class, 'update']);
     Route::patch("/{id}/preco", [ProdutoController::class, 'updatePreco']);
+    Route::patch("/{id}/status", [ProdutoController::class, "updateStatus"]);
 });
