@@ -17,4 +17,6 @@ Route::group(["prefix"=> "/clientes"], function () {
     Route::get("/", [ClienteController::class,"index"]);
     Route::get("/{id}", [ClienteController::class,"show"]);
     Route::post("/", [ClienteController::class, "store"]);
+    Route::put("/{id}", [ClienteController::class, "update"]);
+    Route::patch("/{id}/ativo", [ClienteController::class, "ativo"]);
 });

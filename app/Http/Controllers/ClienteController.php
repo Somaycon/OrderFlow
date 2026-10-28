@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ClienteController extends Controller
 {
@@ -52,5 +53,37 @@ class ClienteController extends Controller
         $cliente = Cliente::create($dados);
 
         return response()->json($cliente, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $cliente = Cliente::findOrFail($id);
+        
+        if ($request->has('email')) {
+            $request->merge(['email' => strtolower(trim($request->input('email')))]);
+        }
+
+        $dados = $request->validate([
+            'nome' => 'sometimes|required|string|max:150',
+            'email' => ['sometimes', 'required', 'email', 'max:255', Rule::unique('clientes', 'email')->ignore($cliente->id)],
+            'telefone' => 'nullable|string|max:20',
+            'ativo' => 'sometimes|boolean',
+        ]);
+
+        $cliente->update($dados);
+        return response()->json($cliente);
+    }
+
+    public function ativo(Request $request, $id)
+    {
+        $cliente = Cliente::findOrFail($id);
+        $cliente->ativo = !$cliente->ativo;
+        $cliente->save();
+
+        if ($cliente->ativo) {
+            return response()->json(['message' => 'Cliente ativado com sucesso.']);
+        } else {
+            return response()->json(['message' => 'Cliente desativado com sucesso.']);
+        }
     }
 }
