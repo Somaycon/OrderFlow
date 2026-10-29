@@ -24,4 +24,17 @@ class PedidoController extends Controller
         $pedidos = $query->paginate(10);
         return response()->json($pedidos);
     }
+
+    public function store(Request $request): JsonResponse
+    {
+        $dados = $request->validate([
+            'cliente_id' => 'required|exists:clientes,id',
+            'status' => [Rule::enum(StatusPedido::class)],
+        ]);
+        if (!isset($dados['status'])) {
+            $dados['status'] = StatusPedido::PENDENTE;
+        }
+        $pedido = Pedido::create($dados);
+        return response()->json($pedido, 201);
+    }
 }

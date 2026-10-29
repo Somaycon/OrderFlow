@@ -24,4 +24,5 @@ Route::group(["prefix"=> "/clientes"], function () {
 
 Route::group(["prefix" => "/pedidos"], function () {
     Route::get("/", [PedidoController::class, "index"]);
+    Route::post("/", [PedidoController::class, "store"]);
 });
