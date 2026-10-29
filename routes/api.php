@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProdutoController;
 
 
@@ -19,4 +20,8 @@ Route::group(["prefix"=> "/clientes"], function () {
     Route::post("/", [ClienteController::class, "store"]);
     Route::put("/{id}", [ClienteController::class, "update"]);
     Route::patch("/{id}/ativo", [ClienteController::class, "ativo"]);
+});
+
+Route::group(["prefix" => "/pedidos"], function () {
+    Route::get("/", [PedidoController::class, "index"]);
 });
