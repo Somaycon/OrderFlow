@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ItensPedidoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProdutoController;
 
@@ -24,5 +25,11 @@ Route::group(["prefix"=> "/clientes"], function () {
 
 Route::group(["prefix" => "/pedidos"], function () {
     Route::get("/", [PedidoController::class, "index"]);
+    Route::get("/{id}", [PedidoController::class, "show"]);
     Route::post("/", [PedidoController::class, "store"]);
+    Route::patch("/{id}/status", [PedidoController::class, "updateStatus"]);
+});
+
+Route::group(["prefix" => "/itens-pedido"], function () {
+    Route::post("/", [ItensPedidoController::class, "store"]);
 });

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Enums\StatusPedido;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pedido extends Model
 {
@@ -26,5 +27,10 @@ class Pedido extends Model
     public function cliente(): BelongsTo
     {
         return $this->belongsTo(Cliente::class);
+    }
+
+    public function itensPedidos(): HasMany
+    {
+        return $this->hasMany(ItensPedido::class);
     }
 }
